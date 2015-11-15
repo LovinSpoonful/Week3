@@ -1,0 +1,111 @@
+---
+title: "R Bridge Week 3 Assignment"
+author: "Rob Hodde"
+date: 11/15/2015
+output: html_document
+---
+
+
+***
+
+### Problem Statement:
+
+Very often, we're tasked with taking data in one form and transforming it for easier downstream analysis.  We will
+spend several weeks in the Fall 607 class on tidying and transformation operations. Some of this work could be
+done in SQL or R (or Python or.). Here, you are asked to use R-you may use base functions or packages as you like.  
+
+
+You need to:  
+
+ - create a data frame with a subset of the columns (and if you like rows) in the dataset.
+ 
+ - include the column that indicates edible or poisonous and three or four other columns
+ 
+ - add meaningful column names and replace the abbreviations used in the data 
+  
+Your deliverable is the R code to perform these transformation tasks.
+
+You should also have the original data file accessible through your code - for example, stored in a github repository and referenced in your code.  
+
+
+
+***
+  
+### Solution:
+
+First we will make a factorial function to be used in the "n chooses r" function:
+
+```{r}
+
+fn_calc_factorial <- function(n) {
+  
+  iproduct <- 1 # set initial value
+  
+  # build up factorial value in a loop
+  for(i in 1:n) {
+   iproduct <- iproduct * i  # multiply the product by the new value to build up the factorial
+  }
+  
+  return (iproduct)
+}
+
+```
+
+  
+
+
+Next we will create the "n choose r" function:
+
+```{r}
+
+fn_calc_choose <- function(n,r) {
+  
+  # we are performing this action:  n! / (( n - r)! * r!)
+  ichoose <- fn_calc_factorial(n) / (fn_calc_factorial(n - r) * fn_calc_factorial(r))
+  
+  return (ichoose)  
+}
+   
+```
+
+***
+  
+### Test Cases
+
+**Test 1:**  If three flavors of ice cream are available, how many different double scoop cones can be made?
+
+```{r}
+
+test_1 <- fn_calc_choose(30, 2)
+test_1
+
+```
+
+*Answer:* `r fn_calc_choose(3, 2)`
+
+
+**Test 2:**  How many different assemblies can we build using four components if we have 15 componenents available?
+
+```{r}
+
+test_2 <- fn_calc_choose(15, 4)
+test_2
+
+```
+
+*Answer:* `r fn_calc_choose(15, 4)`
+
+
+**Test 3:**  Unit Test of factorial function:
+
+```{r}
+
+ ifactorial <- fn_calc_factorial(4)  # answer should be 1 x 2 x 3 x 4 = 24.
+ ifactorial
+```
+
+*Answer:* `r fn_calc_factorial(4)`
+
+
+
+
